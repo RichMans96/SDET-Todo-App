@@ -81,4 +81,43 @@ public class Todo {
 		public void setList(TodoList todoList) {
 			this.todoList = todoList;
 		}
+
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + id;
+			result = prime * result + ((todoData == null) ? 0 : todoData.hashCode());
+			result = prime * result + ((todoList == null) ? 0 : todoList.hashCode());
+			result = prime * result + (todoStatus ? 1231 : 1237);
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Todo other = (Todo) obj;
+			if (id != other.id)
+				return false;
+			if (todoData == null) {
+				if (other.todoData != null)
+					return false;
+			} else if (!todoData.equals(other.todoData))
+				return false;
+			if (todoList == null) {
+				if (other.todoList != null)
+					return false;
+			} else if (!todoList.equals(other.todoList))
+				return false;
+			if (todoStatus != other.todoStatus)
+				return false;
+			return true;
+		}
+		
+		
 }
