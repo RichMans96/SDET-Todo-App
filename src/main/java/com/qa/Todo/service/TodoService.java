@@ -1,5 +1,8 @@
 package com.qa.Todo.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +28,14 @@ public class TodoService {
 		Todo newTodo = todoRepository.save(todo);
 		
 		return todoMapper.mapToDTO(newTodo);
+	}
+	
+	public List<TodoDTO> readAllTodos() {
+		List<Todo> todos = todoRepository.findAll();
+		List<TodoDTO> todoDTOs = new ArrayList<TodoDTO>();
+		
+		todos.forEach(todo -> todoDTOs.add(todoMapper.mapToDTO(todo)));
+		
+		return todoDTOs;
 	}
 }
