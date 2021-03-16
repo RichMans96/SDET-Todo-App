@@ -66,7 +66,7 @@ public class Todo {
 			this.todoData = todoData;
 		}
 
-		public boolean isTodoStatus() {
+		public boolean getTodoStatus() {
 			return todoStatus;
 		}
 
