@@ -1,11 +1,14 @@
 package com.qa.Todo.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,5 +37,12 @@ public class TodoListController {
 		headers.add("Location", String.valueOf(newTodoList.getListId()));
 		
 		return new ResponseEntity<TodoListDTO>(newTodoList, headers, HttpStatus.CREATED);
+	}
+	
+	@GetMapping
+	public ResponseEntity<List<TodoListDTO>> getAllTodoLists() {
+		List<TodoListDTO> listData = todoListService.readAllTodoLists();
+		System.out.println(listData);
+		return new ResponseEntity<List<TodoListDTO>>(listData, HttpStatus.OK);
 	}
 }

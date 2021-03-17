@@ -25,7 +25,7 @@ public class TodoList {
 	@NotNull
 	private String listName;
 	
-	@OneToMany(mappedBy = "todo_list", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "todoList", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Todo> todos;
 	
 	public TodoList() {

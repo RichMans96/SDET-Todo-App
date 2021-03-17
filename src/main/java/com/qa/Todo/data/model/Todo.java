@@ -30,7 +30,7 @@ public class Todo {
 		private boolean todoStatus;
 		
 		@ManyToOne(targetEntity = TodoList.class, fetch = FetchType.EAGER)
-		@JoinColumn
+		@JoinColumn(name = "fk_list_id")
 		private TodoList todoList;
 		
 		public Todo() {}
@@ -74,11 +74,11 @@ public class Todo {
 			this.todoStatus = todoStatus;
 		}
 
-		public TodoList getList() {
+		public TodoList getTodoList() {
 			return todoList;
 		}
 		
-		public void setList(TodoList todoList) {
+		public void setTodoList(TodoList todoList) {
 			this.todoList = todoList;
 		}
 
