@@ -63,7 +63,7 @@ public class TodoService {
 		
 		dbTodo.setTodoData(todo.getTodoData());
 		dbTodo.setTodoStatus(todo.getTodoStatus());
-		dbTodo.setList(todo.getList());
+		dbTodo.setTodoList(todo.getTodoList());
 		
 		Todo updateTodo = todoRepository.save(dbTodo);
 		return todoMapper.mapToDTO(updateTodo);

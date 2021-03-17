@@ -1,5 +1,10 @@
 package com.qa.Todo.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +30,19 @@ public class TodoListService {
 		TodoList createdTodoList = todoListRepository.save(todoList);
 		
 		return todoListMapper.mapToDTO(createdTodoList);
+	}
+	
+	@Transactional
+	public List<TodoListDTO> readAllTodoLists() {
+		List<TodoList> listsInDb = todoListRepository.findAll();
+		List<TodoListDTO> returnedLists = new ArrayList<TodoListDTO>();
+		
+		listsInDb.forEach(list -> {
+			returnedLists.add(todoListMapper.mapToDTO(list));
+		});
+		System.out.println(listsInDb);
+		System.out.println(returnedLists);
+		return returnedLists;
 	}
 	
 }
