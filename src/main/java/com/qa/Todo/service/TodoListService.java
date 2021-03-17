@@ -2,6 +2,7 @@ package com.qa.Todo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.qa.Todo.data.model.TodoList;
 import com.qa.Todo.data.repository.TodoListRepository;
 import com.qa.Todo.dto.TodoListDTO;
+import com.qa.Todo.exceptions.TodoListNotFoundException;
 import com.qa.Todo.mappers.TodoListMapper;
 
 @Service
@@ -43,6 +45,16 @@ public class TodoListService {
 		System.out.println(listsInDb);
 		System.out.println(returnedLists);
 		return returnedLists;
+	}
+	
+	public TodoListDTO getById(Integer id) {
+		Optional<TodoList> todoList = todoListRepository.findById(id);
+		
+		if(todoList.isPresent()) {
+			return todoListMapper.mapToDTO(todoList.get());
+		} else {
+			throw new TodoListNotFoundException("This list doesn't exist!");
+		}
 	}
 	
 }
