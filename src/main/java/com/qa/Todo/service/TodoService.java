@@ -50,4 +50,32 @@ public class TodoService {
 			throw new TodoNotFoundException("Todo doesn't exist!");
 		}
 	}
+	
+	public TodoDTO updateTodo(Integer id, Todo todo) throws TodoNotFoundException {
+		Optional<Todo> todoToUpdate = todoRepository.findById(id);
+		Todo dbTodo;
+		
+		if(todoToUpdate.isPresent()) {
+			dbTodo = todoToUpdate.get();
+		} else {
+			throw new TodoNotFoundException("Todo doesn't exist!");
+		}
+		
+		dbTodo.setTodoData(todo.getTodoData());
+		dbTodo.setTodoStatus(todo.getTodoStatus());
+		dbTodo.setList(todo.getList());
+		
+		Todo updateTodo = todoRepository.save(dbTodo);
+		return todoMapper.mapToDTO(updateTodo);
+	}
+	
+	public boolean deleteTodo(Integer id) {
+		if(!todoRepository.existsById(id)) {
+			throw new TodoNotFoundException();
+		}
+		todoRepository.deleteById(id);
+		boolean exists = todoRepository.existsById(id);
+		
+		return !exists;
+	}
 }
