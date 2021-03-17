@@ -68,4 +68,14 @@ public class TodoService {
 		Todo updateTodo = todoRepository.save(dbTodo);
 		return todoMapper.mapToDTO(updateTodo);
 	}
+	
+	public boolean deleteTodo(Integer id) {
+		if(!todoRepository.existsById(id)) {
+			throw new TodoNotFoundException();
+		}
+		todoRepository.deleteById(id);
+		boolean exists = todoRepository.existsById(id);
+		
+		return !exists;
+	}
 }
