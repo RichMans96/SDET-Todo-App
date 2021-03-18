@@ -47,6 +47,9 @@ public class TodoControllerUnitTest {
 		
 		todos = new ArrayList<Todo>();
 		todoDTOs = new ArrayList<TodoDTO>();
+		
+		todos.add(todo);
+		todoDTOs.add(todoDTO);
 	}
 	
 	@Test
@@ -83,5 +86,16 @@ public class TodoControllerUnitTest {
 		assertThat(response).isEqualTo(todoController.createTodo(todo));
 		
 		verify(todoService, times(1)).createTodo(Mockito.any(Todo.class));
+	}
+	
+	@Test
+	public void updateTodoTest() {
+		when(todoService.updateTodo(Mockito.any(Integer.class), Mockito.any(Todo.class))).thenReturn(todoDTO);
+		
+		ResponseEntity<TodoDTO> response = new ResponseEntity<TodoDTO>(todoDTO, HttpStatus.OK);
+		
+		assertThat(response).isEqualTo(todoController.updateTodo(todo.getId(), todo));
+	
+		verify(todoService, times(1)).updateTodo(Mockito.any(Integer.class), Mockito.any(Todo.class));
 	}
 }
