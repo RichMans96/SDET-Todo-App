@@ -66,4 +66,20 @@ public class TodoListService {
 		
 		return !exists;
 	}
+	
+	public TodoListDTO updateTodoList(Integer id, TodoList todoList) throws TodoListNotFoundException {
+		Optional<TodoList> todoListToUpdate = todoListRepository.findById(id);
+		TodoList dbTodoList;
+		
+		if(todoListToUpdate.isPresent()) {
+			dbTodoList = todoListToUpdate.get();
+		} else {
+			throw new TodoListNotFoundException("Doesn't exist");
+		}
+		
+		dbTodoList.setListName(todoList.getListName());
+		
+		TodoList updatedTodoList = todoListRepository.save(dbTodoList);
+		return todoListMapper.mapToDTO(updatedTodoList);
+	}
 }
