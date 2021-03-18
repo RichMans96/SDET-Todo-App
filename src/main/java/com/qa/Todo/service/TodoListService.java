@@ -57,4 +57,13 @@ public class TodoListService {
 		}
 	}
 	
+	public boolean deleteList(Integer id) {
+		if(!todoListRepository.existsById(id)) {
+			throw new TodoListNotFoundException("Doesn't exist");
+		}
+		todoListRepository.deleteById(id);
+		boolean exists = todoListRepository.existsById(id);
+		
+		return !exists;
+	}
 }
