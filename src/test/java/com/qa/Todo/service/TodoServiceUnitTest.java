@@ -81,4 +81,19 @@ public class TodoServiceUnitTest {
 		verify(todoRepository, times(1)).findById(Mockito.any(Integer.class));
 		verify(todoMapper, times(1)).mapToDTO(todo);
 	}
+	
+	@Test
+	public void updateTodoTest() {
+		Todo updatedTodo = new Todo(1, "Get Dressed", true, todoList);
+		TodoDTO updatedTodoDTO = new TodoDTO(1, "Get Dressed", true);
+	
+		when(todoRepository.findById(Mockito.any(Integer.class))).thenReturn(Optional.of(todo));
+		when(todoRepository.save(Mockito.any(Todo.class))).thenReturn(updatedTodo);
+		when(todoMapper.mapToDTO(Mockito.any(Todo.class))).thenReturn(updatedTodoDTO);
+		
+		TodoDTO testDTO = todoService.updateTodo(todo.getId(), updatedTodo);
+		
+		assertThat(updatedTodoDTO).isEqualTo(testDTO);
+		
+	}
 }
