@@ -98,4 +98,15 @@ public class TodoControllerUnitTest {
 	
 		verify(todoService, times(1)).updateTodo(Mockito.any(Integer.class), Mockito.any(Todo.class));
 	}
+	
+	@Test
+	public void deleteTodoTest() {
+		when(todoService.deleteTodo(Mockito.any(Integer.class))).thenReturn(true);
+		
+		ResponseEntity<Boolean> response = new ResponseEntity<Boolean>(true, HttpStatus.OK);
+	
+		assertThat(response).isEqualTo(todoController.deleteTodo(todo.getId()));
+		
+		verify(todoService, times(1)).deleteTodo(Mockito.any(Integer.class));
+	}
 }
