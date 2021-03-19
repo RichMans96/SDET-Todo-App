@@ -50,6 +50,7 @@ public class TodoServiceIntegrationTest {
 		todoList = todoListRepository.save(todoList);
 		
 		todoRepository.deleteAll();
+		
 		todo = todoRepository.save(todo);
 		todoDTO = todoMapper.mapToDTO(todo);
 		
@@ -66,6 +67,20 @@ public class TodoServiceIntegrationTest {
 		newTodoDTO.setId(createdTodo.getId());
 		
 		assertThat(newTodoDTO).isEqualTo(createdTodo);
+	}
+	
+	@Test
+	public void readAllTodosTest() {
+		List<TodoDTO> todosInDb = todoService.readAllTodos();
+		
+		assertThat(todoDTOs).isEqualTo(todosInDb);
+	}
+	
+	@Test
+	public void getByIdTest() {
+		TodoDTO foundTodo = todoService.todoById(todo.getId());
+		
+		assertThat(todoDTO).isEqualTo(foundTodo);
 	}
 
 }
