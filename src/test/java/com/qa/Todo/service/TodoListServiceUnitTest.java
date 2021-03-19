@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -76,5 +77,19 @@ public class TodoListServiceUnitTest {
 		
 		verify(todoListRepository, times(1)).save(Mockito.any(TodoList.class));
 		verify(todoListMapper, times(1)).mapToDTO(Mockito.any(TodoList.class));
+	}
+	
+	@Test
+	public void updateTodoListTest() {
+		TodoList updatedTodoList = new TodoList(1, "Nightime");
+		TodoListDTO updatedTodoListDTO = new TodoListDTO(1, "Nightime", todos);
+		
+		when(todoListRepository.findById(Mockito.any(Integer.class))).thenReturn(Optional.of(todoList));
+		when(todoListRepository.save(Mockito.any(TodoList.class))).thenReturn(updatedTodoList);
+		when(todoListMapper.mapToDTO(Mockito.any(TodoList.class))).thenReturn(updatedTodoListDTO);
+		
+		TodoListDTO testListDTO = todoListService.updateTodoList(todoList.getListId(), updatedTodoList);
+		
+		assertThat(updatedTodoListDTO).isEqualTo(testListDTO);
 	}
 }
