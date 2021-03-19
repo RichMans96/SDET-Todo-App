@@ -39,8 +39,8 @@ public class TodoControllerIntegrationTest {
 	private ObjectMapper objectMapper;
 
 	private TodoList todoList = new TodoList(1, "Morning");
-	private Todo todo = new Todo(1, "Brush teeth", true, todoList);
-	private TodoDTO todoDTO = new TodoDTO(1, "Brush teeth", true);
+	private Todo todo = new Todo(1, "Get Milk", true, todoList);
+	private TodoDTO todoDTO = new TodoDTO(1, "Get Milk", true);
 
 	private List<Todo> todos = List.of(todo);
 	private List<TodoDTO> todoDTOs = List.of(todoDTO);
@@ -62,5 +62,27 @@ public class TodoControllerIntegrationTest {
 		ResultMatcher headerMatcher = MockMvcResultMatchers.header().string("Location", "2");
 
 		mvc.perform(mockRequest).andExpect(headerMatcher).andExpect(contentMatcher).andExpect(statusMatcher);
+	}
+	
+	@Test
+	public void getAllTodosTest() throws Exception {
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.GET, "/todo");
+		mockRequest.accept(MediaType.APPLICATION_JSON);
+		
+		ResultMatcher statusMatcher = MockMvcResultMatchers.status().isOk();
+		ResultMatcher contentMatcher = MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(todoDTOs));
+	
+		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
+	}
+	
+	@Test
+	public void getTodoById() throws Exception {
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.GET, "/todo/1");
+		mockRequest.accept(MediaType.APPLICATION_JSON);
+		
+		ResultMatcher statusMatcher = MockMvcResultMatchers.status().isOk();
+		ResultMatcher contentMatcher = MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(todoDTO));
+	
+		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
 	}
 }
