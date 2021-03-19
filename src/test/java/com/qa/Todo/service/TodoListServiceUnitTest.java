@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,5 +92,16 @@ public class TodoListServiceUnitTest {
 		TodoListDTO testListDTO = todoListService.updateTodoList(todoList.getListId(), updatedTodoList);
 		
 		assertThat(updatedTodoListDTO).isEqualTo(testListDTO);
+	}
+	
+	@Test
+	public void deleteTodoListTest() {
+		when(todoListRepository.existsById(Mockito.any(Integer.class))).thenReturn(true).thenReturn(false);
+		
+		assertEquals(true, todoListService.deleteList(todoList.getListId()));
+		
+		verify(todoListRepository, times(2)).existsById(Mockito.any(Integer.class));
+		verify(todoListRepository, times(1)).deleteById(Mockito.any(Integer.class));
+		
 	}
 }
