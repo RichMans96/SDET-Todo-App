@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.qa.Todo.data.model.Todo;
 import com.qa.Todo.data.model.TodoList;
 import com.qa.Todo.data.repository.TodoListRepository;
 import com.qa.Todo.data.repository.TodoRepository;
@@ -50,6 +49,11 @@ public class TodoListIntegrationTest {
 		todoLists = new ArrayList<TodoList>();
 		todoListDTOs = new ArrayList<TodoListDTO>();
 		
+		todoListRepository.deleteAll();
+		todoList = todoListRepository.save(todoList);
+		
+		todoRepository.deleteAll();
+		
 		todos.add(todo);
 		todoLists.add(todoList);
 		todoListDTOs.add(todoListDTO);
@@ -64,5 +68,12 @@ public class TodoListIntegrationTest {
 		newTodoListDTO.setListId(createdTodo.getListId());
 		
 		assertThat(newTodoListDTO).isEqualTo(createdTodo);
+	}
+	
+	@Test
+	public void deleteTodoListTest() {
+		boolean deletedTodoList = todoListService.deleteList(todoList.getListId());
+		
+		assertThat(true).isEqualTo(deletedTodoList);
 	}
 }
