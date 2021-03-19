@@ -96,4 +96,14 @@ public class TodoServiceUnitTest {
 		assertThat(updatedTodoDTO).isEqualTo(testDTO);
 		
 	}
+	
+	@Test
+	public void deleteTodoTest() {
+		when(todoRepository.existsById(Mockito.any(Integer.class))).thenReturn(true).thenReturn(false);
+		
+		assertEquals(true, todoService.deleteTodo(todo.getId()));
+		
+		verify(todoRepository, times(2)).existsById(Mockito.any(Integer.class));
+		verify(todoRepository, times(1)).deleteById(Mockito.any(Integer.class));
+	}
 }
