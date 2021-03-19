@@ -85,4 +85,21 @@ public class TodoControllerIntegrationTest {
 	
 		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
 	}
+	
+	@Test
+	public void updateTodoTest() throws Exception {
+		Todo updatedTodo = new Todo("Go for walk", false, todoList);
+		TodoDTO expectedTodo = new TodoDTO(1, "Go for walk", false);
+		
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.PUT, "/todo/1");
+		mockRequest.contentType(MediaType.APPLICATION_JSON);
+		mockRequest.content(objectMapper.writeValueAsString(updatedTodo));
+		mockRequest.accept(MediaType.APPLICATION_JSON);
+		
+		ResultMatcher statusMatcher = MockMvcResultMatchers.status().isOk();
+		ResultMatcher contentMatcher = MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(expectedTodo));
+	
+		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
+		
+	}
 }
