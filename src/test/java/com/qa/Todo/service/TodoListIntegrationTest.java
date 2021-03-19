@@ -76,4 +76,17 @@ public class TodoListIntegrationTest {
 		
 		assertThat(true).isEqualTo(deletedTodoList);
 	}
+	
+	@Test 
+	void updateTodoListTest() {
+		TodoList updatedTodoList = new TodoList(1, "Nighttime");
+		TodoListDTO updatedTodoListDTO = new TodoListDTO(5, "Nighttime", todos);
+		
+		TodoListDTO testListDTO = todoListService.updateTodoList(todoList.getListId(), updatedTodoList);
+		testListDTO.setTodos(todos);
+		
+		assertThat(updatedTodoListDTO).isEqualTo(testListDTO);
+	}
+	
+
 }
