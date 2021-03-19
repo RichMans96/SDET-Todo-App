@@ -10,9 +10,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
@@ -64,4 +66,18 @@ public class TodoListControllerUnitTest {
 		verify(todoListService, times(1)).readAllTodoLists();
 	}
 	
+	@Test
+	public void createTodoListTest() {
+		when(todoListService.createTodoList(Mockito.any(TodoList.class))).thenReturn(todoListDTO);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Location", String.valueOf(todoListDTO.getListId()));
+		
+		ResponseEntity<TodoListDTO> response = new ResponseEntity<TodoListDTO>(todoListDTO, headers, HttpStatus.CREATED);
+		
+		assertThat(response).isEqualTo(todoListController.createTodoList(todoList));
+		
+		verify(todoListService, times(1)).createTodoList(Mockito.any(TodoList.class));
+	}
+
 }
