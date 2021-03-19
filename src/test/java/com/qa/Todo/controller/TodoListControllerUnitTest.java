@@ -91,4 +91,14 @@ public class TodoListControllerUnitTest {
 		verify(todoListService, times(1)).updateTodoList(Mockito.any(Integer.class), Mockito.any(TodoList.class));
 	}
 
+	@Test
+	public void deleteTodoListTest() {
+		when(todoListService.deleteList(Mockito.any(Integer.class))).thenReturn(true);
+		
+		ResponseEntity<Boolean> response = new ResponseEntity<Boolean>(true, HttpStatus.OK);
+		
+		assertThat(response).isEqualTo(todoListController.deleteTodoList(todoList.getListId()));
+		
+		verify(todoListService, times(1)).deleteList(Mockito.any(Integer.class));
+	}
 }
