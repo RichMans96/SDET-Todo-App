@@ -80,13 +80,26 @@ public class TodoListIntegrationTest {
 	@Test 
 	void updateTodoListTest() {
 		TodoList updatedTodoList = new TodoList(1, "Nighttime");
-		TodoListDTO updatedTodoListDTO = new TodoListDTO(5, "Nighttime", todos);
+		TodoListDTO updatedTodoListDTO = new TodoListDTO(1, "Nighttime", todos);
 		
 		TodoListDTO testListDTO = todoListService.updateTodoList(todoList.getListId(), updatedTodoList);
 		testListDTO.setTodos(todos);
-		
+		testListDTO.setListId(1);
 		assertThat(updatedTodoListDTO).isEqualTo(testListDTO);
 	}
 	
+	@Test
+	public void readAllTodoListTest() {
+		List<TodoListDTO> listsInDb = todoListService.readAllTodoLists();
+		
+		assertThat(todoListDTOs).isEqualTo(listsInDb);
+	}
+	
+	@Test
+	public void getByIdTest() {
+		TodoListDTO foundList = todoListService.getById(todoList.getListId());
+		
+		assertThat(todoListDTO).isEqualTo(foundList);
+	}
 
 }
