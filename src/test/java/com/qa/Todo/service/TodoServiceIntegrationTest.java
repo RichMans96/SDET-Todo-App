@@ -82,5 +82,15 @@ public class TodoServiceIntegrationTest {
 		
 		assertThat(todoDTO).isEqualTo(foundTodo);
 	}
+	
+	@Test
+	public void updateTodoTest() {
+		Todo updatedTodo = new Todo(1, "Get dressed", false, todoList);
+		TodoDTO updatedTodoDTO = new TodoDTO(3, "Get dressed", false);
+		
+		TodoDTO testDTO = todoService.updateTodo(todo.getId(), updatedTodo);
+		
+		assertThat(updatedTodoDTO).isEqualTo(testDTO);
+	}
 
 }
