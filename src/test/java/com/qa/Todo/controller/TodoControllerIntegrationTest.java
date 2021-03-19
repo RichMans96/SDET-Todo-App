@@ -102,4 +102,15 @@ public class TodoControllerIntegrationTest {
 		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
 		
 	}
+	
+	@Test
+	public void deleteTodoTest() throws Exception {
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.DELETE, "/todo/1");
+		mockRequest.contentType(MediaType.APPLICATION_JSON);
+		
+		ResultMatcher statusMatcher = MockMvcResultMatchers.status().isOk();
+		ResultMatcher contentMatcher = MockMvcResultMatchers.content().string("true");
+	
+		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
+	}
 }
