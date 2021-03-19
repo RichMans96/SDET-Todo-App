@@ -79,5 +79,16 @@ public class TodoListControllerUnitTest {
 		
 		verify(todoListService, times(1)).createTodoList(Mockito.any(TodoList.class));
 	}
+	
+	@Test
+	public void updateTodoListTest() {
+		when(todoListService.updateTodoList(Mockito.any(Integer.class), Mockito.any(TodoList.class))).thenReturn(todoListDTO);
+		
+		ResponseEntity<TodoListDTO> response = new ResponseEntity<TodoListDTO>(todoListDTO, HttpStatus.OK);
+		
+		assertThat(response).isEqualTo(todoListController.updateTodoList(todoList.getListId(), todoList));
+		
+		verify(todoListService, times(1)).updateTodoList(Mockito.any(Integer.class), Mockito.any(TodoList.class));
+	}
 
 }
