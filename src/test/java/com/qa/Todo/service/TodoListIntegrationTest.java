@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -18,6 +20,7 @@ import com.qa.Todo.dto.TodoListDTO;
 import com.qa.Todo.mappers.TodoListMapper;
 
 @SpringBootTest
+@TestInstance(Lifecycle.PER_CLASS)
 public class TodoListIntegrationTest {
 
 	@Autowired
