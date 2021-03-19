@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -64,5 +65,16 @@ public class TodoListServiceUnitTest {
 		
 		verify(todoListRepository, times(1)).findAll();
 		verify(todoListMapper, times(1)).mapToDTO(todoList);
+	}
+	
+	@Test
+	public void createTodoListTest() {
+		when(todoListRepository.save(Mockito.any(TodoList.class))).thenReturn(todoList);
+		when(todoListMapper.mapToDTO(Mockito.any(TodoList.class))).thenReturn(todoListDTO);
+		
+		assertThat(todoListDTO).isEqualTo(todoListService.createTodoList(todoList));
+		
+		verify(todoListRepository, times(1)).save(Mockito.any(TodoList.class));
+		verify(todoListMapper, times(1)).mapToDTO(Mockito.any(TodoList.class));
 	}
 }
