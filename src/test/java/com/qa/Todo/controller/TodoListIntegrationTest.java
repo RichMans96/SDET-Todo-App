@@ -89,5 +89,21 @@ public class TodoListIntegrationTest {
 		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
 	}
 	
+	@Test
+	public void updateTodoListTest() throws Exception {
+		TodoList updatedTodoList = new TodoList(1, "Go to Tesco");
+		TodoListDTO exceptedTodoList = new TodoListDTO(1, "Go to Tesco", todoDTOs);
+		
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.PUT, "/todolist/1");
+		mockRequest.contentType(MediaType.APPLICATION_JSON);
+		mockRequest.content(objectMapper.writeValueAsString(updatedTodoList));
+		mockRequest.accept(MediaType.APPLICATION_JSON);
+		
+		ResultMatcher statusMatcher = MockMvcResultMatchers.status().isOk();
+		ResultMatcher contentMatcher = MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(exceptedTodoList));
+	
+		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
+	}
+	
 	
 }
