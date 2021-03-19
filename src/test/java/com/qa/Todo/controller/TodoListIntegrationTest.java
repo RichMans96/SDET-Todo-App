@@ -38,19 +38,19 @@ public class TodoListIntegrationTest {
 	private ObjectMapper objectMapper;
 	
 	
-	private TodoList todoList = new TodoList(1, "Morning");
+	private TodoList todoList = new TodoList(1, "Shopping");
 	private List<TodoList> todoLists = List.of(todoList);
 	
 	private TodoDTO todoDTO = new TodoDTO(1, "Get Milk", true);
 	private List<TodoDTO> todoDTOs = List.of(todoDTO);
 	
-	private TodoListDTO todoListDTO = new TodoListDTO(1, "Morning", todoDTOs);
+	private TodoListDTO todoListDTO = new TodoListDTO(1, "Shopping", todoDTOs);
 	private List<TodoListDTO> todoListDTOs = List.of(todoListDTO);
 	
 
 	@Test
 	public void createTodoListTest() throws Exception {
-		TodoList testTodoList = new TodoList(2, "Shopping");
+		TodoList testTodoList = new TodoList(2, "Morning");
 		
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.POST, "/todolist");
 		mockRequest.contentType(MediaType.APPLICATION_JSON);
@@ -67,6 +67,16 @@ public class TodoListIntegrationTest {
 	}
 	
 	
+	@Test
+	public void readAllTodosTest() throws Exception {
+		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.GET, "/todolist");
+		mockRequest.accept(MediaType.APPLICATION_JSON);
+		
+		ResultMatcher statusMatcher = MockMvcResultMatchers.status().isOk();
+		ResultMatcher contentMatcher = MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(todoListDTOs));
+	
+		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
+	}
 	
 	
 }
