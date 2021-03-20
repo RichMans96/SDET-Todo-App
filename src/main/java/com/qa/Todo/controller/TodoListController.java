@@ -23,7 +23,7 @@ import com.qa.Todo.dto.TodoListDTO;
 import com.qa.Todo.service.TodoListService;
 
 @RestController
-@RequestMapping("/todolist")
+@RequestMapping(path = "/todolist")
 @CrossOrigin
 public class TodoListController {
 	private TodoListService todoListService;
