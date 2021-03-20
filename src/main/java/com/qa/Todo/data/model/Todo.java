@@ -86,7 +86,6 @@ public class Todo {
 		public int hashCode() {
 			final int prime = 31;
 			int result = 1;
-			result = prime * result + id;
 			result = prime * result + ((todoData == null) ? 0 : todoData.hashCode());
 			result = prime * result + ((todoList == null) ? 0 : todoList.hashCode());
 			result = prime * result + (todoStatus ? 1231 : 1237);
@@ -102,8 +101,6 @@ public class Todo {
 			if (getClass() != obj.getClass())
 				return false;
 			Todo other = (Todo) obj;
-			if (id != other.id)
-				return false;
 			if (todoData == null) {
 				if (other.todoData != null)
 					return false;
