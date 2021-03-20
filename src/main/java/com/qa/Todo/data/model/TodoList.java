@@ -71,10 +71,12 @@ public class TodoList {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + listId;
 		result = prime * result + ((listName == null) ? 0 : listName.hashCode());
+		result = prime * result + ((todos == null) ? 0 : todos.hashCode());
 		return result;
 	}
+	
+	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -85,12 +87,15 @@ public class TodoList {
 		if (getClass() != obj.getClass())
 			return false;
 		TodoList other = (TodoList) obj;
-		if (listId != other.listId)
-			return false;
 		if (listName == null) {
 			if (other.listName != null)
 				return false;
 		} else if (!listName.equals(other.listName))
+			return false;
+		if (todos == null) {
+			if (other.todos != null)
+				return false;
+		} else if (!todos.equals(other.todos))
 			return false;
 		return true;
 	}
