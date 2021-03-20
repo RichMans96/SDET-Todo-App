@@ -54,6 +54,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
-  //Call the function that will automatically run renderQuote() also
+
   fetchData();
 });
