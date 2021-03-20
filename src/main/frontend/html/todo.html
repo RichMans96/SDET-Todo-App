@@ -42,5 +42,21 @@
         </div>
       </div>
     </nav>
+    <form id="createTodo">
+      <div class="mb-3">
+        <label for="todoData" class="form-label">Add what you need to do here...</label>
+        <input type="text" class="form-control" id="todoData" aria-describedby="tododata" required />
+      </div>
+      <div class="mb-3">
+        <label for="todoStatus" class="form-label">Is this in progress?</label>
+        <input type="text" class="form-control" id="todoStatus" aria-describedby="todostatus" required />
+      </div>
+      <div class="mb-3">
+        <label for="listId" class="form-label">Enter the Id of the list this is for:</label>
+        <input type="text" class="form-control" id="listId" aria-describedby="listId" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+    <script src="../js/createTodo.js"></script>
   </body>
 </html>
