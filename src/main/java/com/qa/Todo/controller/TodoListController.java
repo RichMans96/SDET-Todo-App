@@ -27,39 +27,38 @@ import com.qa.Todo.service.TodoListService;
 @CrossOrigin
 public class TodoListController {
 	private TodoListService todoListService;
-	
+
 	@Autowired
 	public TodoListController(TodoListService todoListService) {
 		this.todoListService = todoListService;
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<TodoListDTO> createTodoList(@Valid @RequestBody TodoList todoList) {
 		TodoListDTO newTodoList = todoListService.createTodoList(todoList);
-		
+
 		HttpHeaders headers = new HttpHeaders();
-		
+
 		headers.add("Location", String.valueOf(newTodoList.getListId()));
-		
+
 		return new ResponseEntity<TodoListDTO>(newTodoList, headers, HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping
 	public ResponseEntity<List<TodoListDTO>> getAllTodoLists() {
 		List<TodoListDTO> listData = todoListService.readAllTodoLists();
 		return new ResponseEntity<List<TodoListDTO>>(listData, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Boolean> deleteTodoList(@PathVariable("id") Integer id) {
 		return new ResponseEntity<Boolean>(todoListService.deleteList(id), HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<TodoListDTO> updateTodoList(@PathVariable("id") Integer id, 
-														@RequestBody TodoList todoList) {
+	public ResponseEntity<TodoListDTO> updateTodoList(@PathVariable("id") Integer id, @RequestBody TodoList todoList) {
 		TodoListDTO updatedTodoList = todoListService.updateTodoList(id, todoList);
-		
+
 		return new ResponseEntity<TodoListDTO>(updatedTodoList, HttpStatus.OK);
 	}
 }

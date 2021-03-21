@@ -28,77 +28,79 @@ public class TodoListControllerUnitTest {
 
 	@Autowired
 	private TodoListController todoListController;
-	
+
 	@MockBean
 	private TodoListService todoListService;
-	
+
 	private List<TodoList> todoLists;
 	private List<TodoListDTO> todoListDTOs;
 	private List<TodoDTO> todos;
-	
+
 	private TodoDTO todo;
 	private TodoList todoList;
 	private TodoListDTO todoListDTO;
-	
+
 	@BeforeEach
 	public void init() {
 		todo = new TodoDTO(1, "brush teeth", false);
 		todoList = new TodoList(1, "Morning");
 		todoListDTO = new TodoListDTO(1, "Morning", todos);
-		
+
 		todos = new ArrayList<TodoDTO>();
 		todoLists = new ArrayList<TodoList>();
 		todoListDTOs = new ArrayList<TodoListDTO>();
-		
+
 		todos.add(todo);
 		todoLists.add(todoList);
 		todoListDTOs.add(todoListDTO);
 	}
-	
+
 	@Test
 	public void getAllTodoLists() {
 		when(todoListService.readAllTodoLists()).thenReturn(todoListDTOs);
-		
+
 		ResponseEntity<List<TodoListDTO>> response = new ResponseEntity<List<TodoListDTO>>(todoListDTOs, HttpStatus.OK);
-		
+
 		assertThat(response).isEqualTo(todoListController.getAllTodoLists());
-		
+
 		verify(todoListService, times(1)).readAllTodoLists();
 	}
-	
+
 	@Test
 	public void createTodoListTest() {
 		when(todoListService.createTodoList(Mockito.any(TodoList.class))).thenReturn(todoListDTO);
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Location", String.valueOf(todoListDTO.getListId()));
-		
-		ResponseEntity<TodoListDTO> response = new ResponseEntity<TodoListDTO>(todoListDTO, headers, HttpStatus.CREATED);
-		
+
+		ResponseEntity<TodoListDTO> response = new ResponseEntity<TodoListDTO>(todoListDTO, headers,
+				HttpStatus.CREATED);
+
 		assertThat(response).isEqualTo(todoListController.createTodoList(todoList));
-		
+
 		verify(todoListService, times(1)).createTodoList(Mockito.any(TodoList.class));
 	}
-	
+
 	@Test
 	public void updateTodoListTest() {
-		when(todoListService.updateTodoList(Mockito.any(Integer.class), Mockito.any(TodoList.class))).thenReturn(todoListDTO);
-		
+		when(todoListService.updateTodoList(Mockito.any(Integer.class), Mockito.any(TodoList.class)))
+				.thenReturn(todoListDTO);
+
 		ResponseEntity<TodoListDTO> response = new ResponseEntity<TodoListDTO>(todoListDTO, HttpStatus.OK);
-		
+
 		assertThat(response).isEqualTo(todoListController.updateTodoList(todoList.getListId(), todoList));
-		
+
 		verify(todoListService, times(1)).updateTodoList(Mockito.any(Integer.class), Mockito.any(TodoList.class));
 	}
 
 	@Test
 	public void deleteTodoListTest() {
 		when(todoListService.deleteList(Mockito.any(Integer.class))).thenReturn(true);
-		
+
 		ResponseEntity<Boolean> response = new ResponseEntity<Boolean>(true, HttpStatus.OK);
-		
+
 		assertThat(response).isEqualTo(todoListController.deleteTodoList(todoList.getListId()));
-		
+
 		verify(todoListService, times(1)).deleteList(Mockito.any(Integer.class));
 	}
 }

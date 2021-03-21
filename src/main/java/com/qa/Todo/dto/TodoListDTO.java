@@ -3,20 +3,16 @@ package com.qa.Todo.dto;
 import java.util.List;
 
 public class TodoListDTO {
-	
+
 	private int listId;
-	
+
 	private String listName;
-	
+
 	private List<TodoDTO> todos;
-	
-	
 
 	public TodoListDTO() {
 		super();
 	}
-
-
 
 	public TodoListDTO(int listId, String listName, List<TodoDTO> todos) {
 		super();
@@ -25,37 +21,25 @@ public class TodoListDTO {
 		this.todos = todos;
 	}
 
-
-
 	public int getListId() {
 		return listId;
 	}
-
-
 
 	public void setListId(int listId) {
 		this.listId = listId;
 	}
 
-
-
 	public String getListName() {
 		return listName;
 	}
-
-
 
 	public void setListName(String listName) {
 		this.listName = listName;
 	}
 
-
-
 	public List<TodoDTO> getTodos() {
 		return todos;
 	}
-
-
 
 	public void setTodos(List<TodoDTO> todos) {
 		this.todos = todos;
@@ -66,8 +50,6 @@ public class TodoListDTO {
 		return "TodoListDTO [listId=" + listId + ", listName=" + listName + ", todos=" + todos + "]";
 	}
 
-
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -77,8 +59,6 @@ public class TodoListDTO {
 		result = prime * result + ((todos == null) ? 0 : todos.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -103,7 +83,5 @@ public class TodoListDTO {
 			return false;
 		return true;
 	}
-	
-	
 
 }

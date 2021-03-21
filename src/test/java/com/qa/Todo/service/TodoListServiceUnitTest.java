@@ -28,80 +28,80 @@ public class TodoListServiceUnitTest {
 
 	@Autowired
 	private TodoListService todoListService;
-	
+
 	@MockBean
 	private TodoListRepository todoListRepository;
-	
+
 	@MockBean
 	private TodoListMapper todoListMapper;
-	
+
 	private List<TodoList> todoLists;
 	private List<TodoListDTO> todoListDTOs;
 	private List<TodoDTO> todos;
-	
+
 	private TodoDTO todo;
 	private TodoList todoList;
 	private TodoListDTO todoListDTO;
-	
+
 	@BeforeEach
 	public void init() {
 		todo = new TodoDTO(1, "brush teeth", false);
 		todoList = new TodoList(1, "Morning");
 		todoListDTO = new TodoListDTO(1, "Morning", todos);
-		
+
 		todos = new ArrayList<TodoDTO>();
 		todoLists = new ArrayList<TodoList>();
 		todoListDTOs = new ArrayList<TodoListDTO>();
-		
+
 		todos.add(todo);
 		todoLists.add(todoList);
 		todoListDTOs.add(todoListDTO);
 	}
-	
+
 	@Test
 	public void readAllTodoListsTest() {
 		when(todoListRepository.findAll()).thenReturn(todoLists);
 		when(todoListMapper.mapToDTO(todoList)).thenReturn(todoListDTO);
-		
+
 		assertThat(todoListDTOs).isEqualTo(todoListService.readAllTodoLists());
-		
+
 		verify(todoListRepository, times(1)).findAll();
 		verify(todoListMapper, times(1)).mapToDTO(todoList);
 	}
-	
+
 	@Test
 	public void createTodoListTest() {
 		when(todoListRepository.save(Mockito.any(TodoList.class))).thenReturn(todoList);
 		when(todoListMapper.mapToDTO(Mockito.any(TodoList.class))).thenReturn(todoListDTO);
-		
+
 		assertThat(todoListDTO).isEqualTo(todoListService.createTodoList(todoList));
-		
+
 		verify(todoListRepository, times(1)).save(Mockito.any(TodoList.class));
 		verify(todoListMapper, times(1)).mapToDTO(Mockito.any(TodoList.class));
 	}
-	
+
 	@Test
 	public void updateTodoListTest() {
 		TodoList updatedTodoList = new TodoList(1, "Nightime");
 		TodoListDTO updatedTodoListDTO = new TodoListDTO(1, "Nightime", todos);
-		
+
 		when(todoListRepository.findById(Mockito.any(Integer.class))).thenReturn(Optional.of(todoList));
 		when(todoListRepository.save(Mockito.any(TodoList.class))).thenReturn(updatedTodoList);
 		when(todoListMapper.mapToDTO(Mockito.any(TodoList.class))).thenReturn(updatedTodoListDTO);
-		
+
 		TodoListDTO testListDTO = todoListService.updateTodoList(todoList.getListId(), updatedTodoList);
-		
+
 		assertThat(updatedTodoListDTO).isEqualTo(testListDTO);
 	}
-	
+
 	@Test
 	public void deleteTodoListTest() {
 		when(todoListRepository.existsById(Mockito.any(Integer.class))).thenReturn(true).thenReturn(false);
-		
+
 		assertEquals(true, todoListService.deleteList(todoList.getListId()));
-		
+
 		verify(todoListRepository, times(2)).existsById(Mockito.any(Integer.class));
 		verify(todoListRepository, times(1)).deleteById(Mockito.any(Integer.class));
-		
+
 	}
 }

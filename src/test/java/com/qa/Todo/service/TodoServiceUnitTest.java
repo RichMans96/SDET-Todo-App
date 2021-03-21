@@ -28,92 +28,90 @@ public class TodoServiceUnitTest {
 
 	@Autowired
 	private TodoService todoService;
-	
+
 	@MockBean
 	private TodoRepository todoRepository;
-	
+
 	@MockBean
 	private TodoMapper todoMapper;
-	
+
 	private List<Todo> todos;
 	private List<TodoDTO> todoDTOs;
-	
+
 	private Todo todo;
 	private Optional<Todo> optTodo;
 	private TodoDTO todoDTO;
 	private TodoList todoList;
-	
+
 	@BeforeEach
 	public void init() {
 		todoList = new TodoList(1, "Morning");
 		todo = new Todo(1, "Brush teeth", true, todoList);
 		todoDTO = new TodoDTO(1, "Brush teeth", true);
 		optTodo = Optional.of(new Todo(1, "Brush teeth", true, todoList));
-		
-		
+
 		todos = new ArrayList<Todo>();
 		todoDTOs = new ArrayList<TodoDTO>();
-		
-		
+
 		todos.add(todo);
 		todoDTOs.add(todoDTO);
 
 	}
-	
+
 	@Test
 	public void readAllTodosTest() {
 		when(todoRepository.findAll()).thenReturn(todos);
 		when(todoMapper.mapToDTO(todo)).thenReturn(todoDTO);
-		
+
 		assertThat(todoDTOs).isEqualTo(todoService.readAllTodos());
-		
+
 		verify(todoRepository, times(1)).findAll();
 		verify(todoMapper, times(1)).mapToDTO(todo);
 	}
-	
+
 	@Test
 	public void todoByIdExceptionTest() {
 		when(todoRepository.findById(Mockito.any(Integer.class))).thenReturn(optTodo);
 		when(todoMapper.mapToDTO(todo)).thenReturn(todoDTO);
-		
+
 		assertEquals(todoDTO, todoService.todoById(todo.getId()));
-		
+
 		verify(todoRepository, times(1)).findById(Mockito.any(Integer.class));
 		verify(todoMapper, times(1)).mapToDTO(todo);
 	}
-	
+
 	@Test
 	public void updateTodoTest() {
 		Todo updatedTodo = new Todo(1, "Get Dressed", true, todoList);
 		TodoDTO updatedTodoDTO = new TodoDTO(1, "Get Dressed", true);
-	
+
 		when(todoRepository.findById(Mockito.any(Integer.class))).thenReturn(Optional.of(todo));
 		when(todoRepository.save(Mockito.any(Todo.class))).thenReturn(updatedTodo);
 		when(todoMapper.mapToDTO(Mockito.any(Todo.class))).thenReturn(updatedTodoDTO);
-		
+
 		TodoDTO testDTO = todoService.updateTodo(todo.getId(), updatedTodo);
-		
+
 		assertThat(updatedTodoDTO).isEqualTo(testDTO);
-		
+
 	}
-	
+
 	@Test
 	public void deleteTodoTest() {
 		when(todoRepository.existsById(Mockito.any(Integer.class))).thenReturn(true).thenReturn(false);
-		
+
 		assertEquals(true, todoService.deleteTodo(todo.getId()));
-		
+
 		verify(todoRepository, times(2)).existsById(Mockito.any(Integer.class));
 		verify(todoRepository, times(1)).deleteById(Mockito.any(Integer.class));
 	}
-	
+
 	@Test
 	public void createTodoTest() {
 		when(todoRepository.save(Mockito.any(Todo.class))).thenReturn(todo);
 		when(todoMapper.mapToDTO(Mockito.any(Todo.class))).thenReturn(todoDTO);
-		
+
 		assertThat(todoDTO).isEqualTo(todoService.createTodo(todo));
-		
+
 		verify(todoRepository, times(1)).save(Mockito.any(Todo.class));
 		verify(todoMapper, times(1)).mapToDTO(Mockito.any(Todo.class));
 	}

@@ -20,18 +20,18 @@ public class TodoList {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "list_id")
 	private int listId;
-	
+
 	@Column(name = "list_name")
 	@NotNull
 	private String listName;
-	
+
 	@OneToMany(mappedBy = "todoList", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Todo> todos;
-	
+
 	public TodoList() {
-		
+
 	}
-	
+
 	public TodoList(String listName) {
 		super();
 		this.listName = listName;
@@ -75,8 +75,6 @@ public class TodoList {
 		result = prime * result + ((todos == null) ? 0 : todos.hashCode());
 		return result;
 	}
-	
-	
 
 	@Override
 	public boolean equals(Object obj) {
@@ -104,6 +102,5 @@ public class TodoList {
 	public String toString() {
 		return "TodoList [listId=" + listId + ", listName=" + listName + "]";
 	}
-	
-	
+
 }

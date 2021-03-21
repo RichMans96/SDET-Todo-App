@@ -27,7 +27,7 @@ import com.qa.Todo.mappers.TodoMapper;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 @Sql(scripts = { "classpath:test-schema.sql",
-"classpath:test-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+		"classpath:test-data.sql" }, executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
 public class TodoControllerIntegrationTest {
 	@Autowired
 	private MockMvc mvc;
@@ -63,54 +63,55 @@ public class TodoControllerIntegrationTest {
 
 		mvc.perform(mockRequest).andExpect(headerMatcher).andExpect(contentMatcher).andExpect(statusMatcher);
 	}
-	
+
 	@Test
 	public void getAllTodosTest() throws Exception {
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.GET, "/todo");
 		mockRequest.accept(MediaType.APPLICATION_JSON);
-		
+
 		ResultMatcher statusMatcher = MockMvcResultMatchers.status().isOk();
 		ResultMatcher contentMatcher = MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(todoDTOs));
-	
+
 		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
 	}
-	
+
 	@Test
 	public void getTodoById() throws Exception {
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.GET, "/todo/1");
 		mockRequest.accept(MediaType.APPLICATION_JSON);
-		
+
 		ResultMatcher statusMatcher = MockMvcResultMatchers.status().isOk();
 		ResultMatcher contentMatcher = MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(todoDTO));
-	
+
 		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
 	}
-	
+
 	@Test
 	public void updateTodoTest() throws Exception {
 		Todo updatedTodo = new Todo("Go for walk", false, todoList);
 		TodoDTO expectedTodo = new TodoDTO(1, "Go for walk", false);
-		
+
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.PUT, "/todo/1");
 		mockRequest.contentType(MediaType.APPLICATION_JSON);
 		mockRequest.content(objectMapper.writeValueAsString(updatedTodo));
 		mockRequest.accept(MediaType.APPLICATION_JSON);
-		
+
 		ResultMatcher statusMatcher = MockMvcResultMatchers.status().isOk();
-		ResultMatcher contentMatcher = MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(expectedTodo));
-	
+		ResultMatcher contentMatcher = MockMvcResultMatchers.content()
+				.json(objectMapper.writeValueAsString(expectedTodo));
+
 		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
-		
+
 	}
-	
+
 	@Test
 	public void deleteTodoTest() throws Exception {
 		MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders.request(HttpMethod.DELETE, "/todo/1");
 		mockRequest.contentType(MediaType.APPLICATION_JSON);
-		
+
 		ResultMatcher statusMatcher = MockMvcResultMatchers.status().isOk();
 		ResultMatcher contentMatcher = MockMvcResultMatchers.content().string("true");
-	
+
 		mvc.perform(mockRequest).andExpect(statusMatcher).andExpect(contentMatcher);
 	}
 }

@@ -25,44 +25,44 @@ import com.qa.Todo.service.TodoService;
 @RequestMapping(path = "/todo")
 @CrossOrigin
 public class TodoController {
-	
+
 	private TodoService todoService;
-	
+
 	public TodoController(TodoService todoService) {
 		this.todoService = todoService;
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<TodoDTO> createTodo(@Valid @RequestBody Todo todo) {
 		TodoDTO newTodo = todoService.createTodo(todo);
-		
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Location", String.valueOf(newTodo.getId()));
-		
+
 		return new ResponseEntity<TodoDTO>(newTodo, headers, HttpStatus.CREATED);
 	}
-	
+
 	@GetMapping
-	public ResponseEntity <List<TodoDTO>> getAllTodos() {
+	public ResponseEntity<List<TodoDTO>> getAllTodos() {
 		List<TodoDTO> todos = todoService.readAllTodos();
-		
+
 		return new ResponseEntity<List<TodoDTO>>(todos, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<TodoDTO> todoById(@PathVariable("id") Integer id) {
 		TodoDTO todo = todoService.todoById(id);
-		
+
 		return new ResponseEntity<TodoDTO>(todo, HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/{id}")
 	public ResponseEntity<TodoDTO> updateTodo(@PathVariable("id") Integer id, @RequestBody Todo todo) {
 		TodoDTO updatedTodo = todoService.updateTodo(id, todo);
-		
+
 		return new ResponseEntity<TodoDTO>(updatedTodo, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Boolean> deleteTodo(@PathVariable("id") Integer id) {
 		return new ResponseEntity<Boolean>(todoService.deleteTodo(id), HttpStatus.OK);

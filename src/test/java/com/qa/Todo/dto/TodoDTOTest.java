@@ -12,6 +12,8 @@ public class TodoDTOTest {
 
 	@Test
 	public void testEquals() {
-		EqualsVerifier.simple().forClass(TodoDTO.class).withPrefabValues(TodoDTO.class, new TodoDTO(1, "Buy milk", true), new TodoDTO(2, "Buy beans", false)).verify();
+		EqualsVerifier.simple().forClass(TodoDTO.class)
+				.withPrefabValues(TodoDTO.class, new TodoDTO(1, "Buy milk", true), new TodoDTO(2, "Buy beans", false))
+				.verify();
 	}
 }

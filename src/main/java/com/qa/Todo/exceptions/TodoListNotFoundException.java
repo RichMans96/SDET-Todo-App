@@ -17,5 +17,4 @@ public class TodoListNotFoundException extends EntityNotFoundException {
 		super(message);
 	}
 
-	
 }

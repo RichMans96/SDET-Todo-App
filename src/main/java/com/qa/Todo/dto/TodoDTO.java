@@ -2,86 +2,80 @@ package com.qa.Todo.dto;
 
 public class TodoDTO {
 
+	private int id;
 
-		private int id;
+	private String todoData;
 
-		private String todoData;
+	private boolean todoStatus;
 
-		private boolean todoStatus;
+	public TodoDTO() {
+	}
 
+	public TodoDTO(int id, String todoData, boolean todoStatus) {
+		super();
+		this.id = id;
+		this.todoData = todoData;
+		this.todoStatus = todoStatus;
+	}
 
-		public TodoDTO() {}
+	public int getId() {
+		return id;
+	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
 
-		public TodoDTO(int id,  String todoData,  boolean todoStatus) {
-			super();
-			this.id = id;
-			this.todoData = todoData;
-			this.todoStatus = todoStatus;
-		}
+	public String getTodoData() {
+		return todoData;
+	}
 
-		public int getId() {
-			return id;
-		}
+	public void setTodoData(String todoData) {
+		this.todoData = todoData;
+	}
 
-		public void setId(int id) {
-			this.id = id;
-		}
+	public boolean isTodoStatus() {
+		return todoStatus;
+	}
 
-		public String getTodoData() {
-			return todoData;
-		}
+	public void setTodoStatus(boolean todoStatus) {
+		this.todoStatus = todoStatus;
+	}
 
-		public void setTodoData(String todoData) {
-			this.todoData = todoData;
-		}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		result = prime * result + ((todoData == null) ? 0 : todoData.hashCode());
+		result = prime * result + (todoStatus ? 1231 : 1237);
+		return result;
+	}
 
-		public boolean isTodoStatus() {
-			return todoStatus;
-		}
-
-		public void setTodoStatus(boolean todoStatus) {
-			this.todoStatus = todoStatus;
-		}
-
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result + id;
-			result = prime * result + ((todoData == null) ? 0 : todoData.hashCode());
-			result = prime * result + (todoStatus ? 1231 : 1237);
-			return result;
-		}
-
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (getClass() != obj.getClass())
-				return false;
-			TodoDTO other = (TodoDTO) obj;
-			if (id != other.id)
-				return false;
-			if (todoData == null) {
-				if (other.todoData != null)
-					return false;
-			} else if (!todoData.equals(other.todoData))
-				return false;
-			if (todoStatus != other.todoStatus)
-				return false;
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
 			return true;
-		}
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TodoDTO other = (TodoDTO) obj;
+		if (id != other.id)
+			return false;
+		if (todoData == null) {
+			if (other.todoData != null)
+				return false;
+		} else if (!todoData.equals(other.todoData))
+			return false;
+		if (todoStatus != other.todoStatus)
+			return false;
+		return true;
+	}
 
+	@Override
+	public String toString() {
+		return "TodoDTO [id=" + id + ", todoData=" + todoData + ", todoStatus=" + todoStatus + "]";
+	}
 
-		@Override
-		public String toString() {
-			return "TodoDTO [id=" + id + ", todoData=" + todoData + ", todoStatus=" + todoStatus + "]";
-		}
-		
-		
 }
