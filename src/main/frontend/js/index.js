@@ -8,11 +8,20 @@ document.addEventListener('DOMContentLoaded', () => {
     for (const list of data) {
       const todoListContainer = document.querySelector('#list-container');
       const deleteBtn = document.createElement('button');
+      const updateBtn = document.createElement('button');
+      const dropdownContainer = document.createElement('div');
+      const form = document.createElement('form');
+      const formContent = document.createElement('div');
+      const formLabel = document.createElement('label');
+      const formInput = document.createElement('input');
+      const formBtn = document.createElement('button');
       const card = document.createElement('div');
       const cardHeader = document.createElement('div');
       const cardBody = document.createElement('div');
       const listTitle = document.createElement('h1');
       const todoWrapper = document.createElement('div');
+
+      dropdownContainer.className = 'dropdown';
 
       card.classList = 'card';
       cardHeader.classList = 'card-header';
@@ -22,9 +31,36 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteBtn.className = 'btn btn-danger';
       deleteBtn.addEventListener('click', () => deleteTodoList(list.listId));
 
+      updateBtn.innerHTML = 'Update';
+      updateBtn.classList = 'btn btn-success dropdown-toggle';
+      updateBtn.type = 'button';
+      updateBtn.id = 'dropdownMenu2';
+      updateBtn.setAttribute('data-toggle', 'dropdown');
+      updateBtn.setAttribute('aria-haspopup', 'true');
+      updateBtn.setAttribute('aria-expanded', 'false');
+
+      form.className = 'dropdown-menu p-4';
+      form.setAttribute('aria-labelledby', 'dropdownMenu2');
+      formContent.className = 'form-group';
+      formLabel.innerHTML = 'Update list name here';
+      formInput.type = 'text';
+      formInput.className = 'dropdown-item';
+      formInput.id = 'updatedName';
+      formBtn.type = 'submit';
+      formBtn.className = 'btn btn-primary';
+      formBtn.innerHTML = 'Send';
+      formBtn.addEventListener('click', (event) => updateListName(event, list));
+
       listTitle.innerHTML = list.listName;
       card.id = list.listId;
 
+      formContent.appendChild(formLabel);
+      formContent.appendChild(formInput);
+      form.appendChild(formContent);
+      form.appendChild(formBtn);
+      dropdownContainer.appendChild(updateBtn);
+      dropdownContainer.appendChild(form);
+      cardHeader.appendChild(dropdownContainer);
       cardHeader.appendChild(deleteBtn);
       cardHeader.appendChild(listTitle);
       card.appendChild(cardHeader);
@@ -127,6 +163,18 @@ document.addEventListener('DOMContentLoaded', () => {
           .catch((err) => {
             console.log(err);
           });
+      }
+
+      function updateListName(event, list) {
+        event.preventDefault();
+        const newData = document.querySelector('#updatedName').value;
+        fetch(`http://localhost:8080/todolist/${list.listId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            listName: newData,
+          }),
+        });
       }
     }
   }
