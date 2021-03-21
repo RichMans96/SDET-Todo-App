@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
       deleteBtn.addEventListener('click', () => deleteTodoList(list.listId));
 
       listTitle.innerHTML = list.listName;
+      card.id = list.listId;
 
       cardHeader.appendChild(deleteBtn);
       cardHeader.appendChild(listTitle);
@@ -87,6 +88,17 @@ document.addEventListener('DOMContentLoaded', () => {
       function deleteTodo(id) {
         const elToRemove = document.getElementById(id);
         fetch(`http://localhost:8080/todo/${id}`, {
+          method: 'DELETE',
+        })
+          .then(elToRemove.remove())
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+
+      function deleteTodoList(listId) {
+        const elToRemove = document.getElementById(listId);
+        fetch(`http://localhost:8080/todolist/${listId}`, {
           method: 'DELETE',
         })
           .then(elToRemove.remove())
