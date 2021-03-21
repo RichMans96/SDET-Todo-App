@@ -99,6 +99,6 @@ public class TodoServiceIntegrationTest {
 	@Test
 	public void deleteTodoTest() {
 		boolean deleteTodo = todoService.deleteTodo(todo.getId());
-		assertThat(true).isEqualTo(deleteTodo);
+		assertThat(deleteTodo).isEqualTo(true);
 	}
 }

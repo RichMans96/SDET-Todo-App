@@ -42,8 +42,6 @@ public class TodoListService {
 		listsInDb.forEach(list -> {
 			returnedLists.add(todoListMapper.mapToDTO(list));
 		});
-		System.out.println(listsInDb);
-		System.out.println(returnedLists);
 		return returnedLists;
 	}
 	

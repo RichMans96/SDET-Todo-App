@@ -77,7 +77,7 @@ public class TodoListIntegrationTest {
 	public void deleteTodoListTest() {
 		boolean deletedTodoList = todoListService.deleteList(todoList.getListId());
 		
-		assertThat(true).isEqualTo(deletedTodoList);
+		assertThat(deletedTodoList).isEqualTo(true);
 	}
 	
 	@Test 

@@ -45,7 +45,6 @@ public class TodoListController {
 	@GetMapping
 	public ResponseEntity<List<TodoListDTO>> getAllTodoLists() {
 		List<TodoListDTO> listData = todoListService.readAllTodoLists();
-		System.out.println(listData);
 		return new ResponseEntity<List<TodoListDTO>>(listData, HttpStatus.OK);
 	}
 	

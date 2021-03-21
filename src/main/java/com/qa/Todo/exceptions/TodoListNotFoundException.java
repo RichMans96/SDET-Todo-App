@@ -11,12 +11,10 @@ public class TodoListNotFoundException extends EntityNotFoundException {
 
 	public TodoListNotFoundException() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public TodoListNotFoundException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 	
