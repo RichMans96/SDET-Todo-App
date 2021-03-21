@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo App</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Todo App</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="./homepage.html">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./list.html">Create a List</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./todo.html">Create a Todo</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <form id="createTodo">
+      <div class="mb-3">
+        <label for="todoData" class="form-label">Add what you need to do here...</label>
+        <input type="text" class="form-control" id="todoData" aria-describedby="tododata" required />
+      </div>
+      <div class="mb-3">
+        <label for="todoStatus" class="form-label">Is this in progress?</label>
+        <input type="text" class="form-control" id="todoStatus" aria-describedby="todostatus" required />
+      </div>
+      <div class="mb-3">
+        <label for="listId" class="form-label">Enter the Id of the list this is for:</label>
+        <input type="text" class="form-control" id="listId" aria-describedby="listId" required />
+      </div>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+    <script src="../js/createTodo.js"></script>
+  </body>
+</html>
