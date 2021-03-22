@@ -21,11 +21,5 @@ function createList(event) {
         listId: listId,
       },
     }),
-  }).then((response) => {
-    if (response.status == 201) {
-      alert('Created successfully!');
-    } else {
-      alert('Something went wrong, please try again!');
-    }
   });
 }

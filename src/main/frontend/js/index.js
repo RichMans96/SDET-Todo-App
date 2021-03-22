@@ -158,7 +158,9 @@ document.addEventListener('DOMContentLoaded', () => {
           }),
         })
           .then((response) => {
-            console.log(response);
+            if (response.status == 200) {
+              location.reload();
+            }
           })
           .catch((err) => {
             console.log(err);
@@ -174,6 +176,10 @@ document.addEventListener('DOMContentLoaded', () => {
           body: JSON.stringify({
             listName: newData,
           }),
+        }).then((response) => {
+          if (response.status == 200) {
+            location.reload();
+          }
         });
       }
     }

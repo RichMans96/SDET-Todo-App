@@ -16,6 +16,4 @@ function createList(event) {
       listName: listName,
     }),
   });
-
-  alert('Created successfully!');
 }
