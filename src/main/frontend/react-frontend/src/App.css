@@ -1,4 +1,35 @@
 .App {
   text-align: center;
+  background: #209cee;
+  height: 100vh;
+  padding: 30px;
 }
 
+.main-container {
+  width: auto;
+  margin: 50px;
+  display: grid;
+  grid-gap: 20px;
+  grid-auto-flow: row;
+  grid-template-columns: 200px 200px 200px;
+  grid-template-rows: repeat(3, auto);
+}
+
+.list-card {
+  background: #e8e8e8;
+  border-radius: 4px;
+  padding: 5px;
+  max-width: 400px;
+}
+
+.todo {
+  align-items: center;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+  display: flex;
+  font-size: 12px;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  padding: 3px 10px;
+}
