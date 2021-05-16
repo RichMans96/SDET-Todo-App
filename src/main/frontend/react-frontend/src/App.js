@@ -18,20 +18,28 @@ function App() {
 
   useEffect(() => fetchData(), []);
 
-  console.log(todoLists);
-
   const addTodo = (text, id) => {
+    const listId = id;
+    const newTodo = {
+      todoData: text,
+      todoStatus: false,
+      todoList: {
+        listId: listId,
+      },
+    };
+
     axios
-      .post('http://localhost:8080/todo', {
-        todoData: text,
-        todoStatus: false,
-        todoList: {
-          listId: id,
-        },
-      })
+      .post('http://localhost:8080/todo', newTodo)
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
-    window.location.reload(false);
+
+    const newLists = [...todoLists];
+    newLists.forEach((list) => {
+      if (list.listId === listId) {
+        list.todos.push(newTodo);
+      }
+    });
+    setTodoLists(newLists);
   };
 
   const addList = (text) => {
@@ -41,6 +49,19 @@ function App() {
       })
       .then((response) => console.log(response))
       .catch((error) => console.log(error));
+    const newLists = [...todoLists, { listId: todoLists.length + 1, listName: text, todos: [] }];
+    setTodoLists(newLists);
+  };
+
+  const deleteList = (id) => {
+    axios
+      .delete(`http://localhost:8080/todolist/${id}`)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+    const newLists = [...todoLists];
+    const index = newLists.findIndex((list) => list.listId === id);
+    if (index !== -1) newLists.splice(index, 1);
+    setTodoLists(newLists);
   };
 
   if (isLoading) {
@@ -55,7 +76,7 @@ function App() {
     <div className='App'>
       <div className='main-container'>
         {todoLists.map((list, index) => (
-          <ListCard key={index} index={index} data={list} addTodo={addTodo} />
+          <ListCard key={index} index={index} data={list} addTodo={addTodo} deleteList={deleteList} />
         ))}
         <ListInput addList={addList} />
       </div>

@@ -5,9 +5,8 @@ const TodoInput = ({ addTodo, listId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!input) return;
-    addTodo(input, document.getElementById(listId).id);
+    addTodo(input, listId);
     setInput('');
   };
 
