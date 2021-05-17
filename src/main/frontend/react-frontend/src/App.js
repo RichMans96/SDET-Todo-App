@@ -27,19 +27,22 @@ function App() {
         listId: listId,
       },
     };
-
     axios
       .post('http://localhost:8080/todo', newTodo)
-      .then((response) => console.log(response))
+      .then((response) => {
+        const newStateTodo = {
+          id: response.data.id,
+          todoData: response.data.todoData,
+        };
+        const newLists = [...todoLists];
+        newLists.forEach((list) => {
+          if (list.listId === listId) {
+            list.todos.push(newStateTodo);
+          }
+        });
+        setTodoLists(newLists);
+      })
       .catch((error) => console.log(error));
-
-    const newLists = [...todoLists];
-    newLists.forEach((list) => {
-      if (list.listId === listId) {
-        list.todos.push(newTodo);
-      }
-    });
-    setTodoLists(newLists);
   };
 
   const addList = (text) => {
@@ -47,10 +50,17 @@ function App() {
       .post('http://localhost:8080/todolist', {
         listName: text,
       })
-      .then((response) => console.log(response))
+      .then((response) => {
+        console.log(response);
+        const newStateList = {
+          listId: response.data.listId,
+          listName: response.data.listName,
+          todos: [],
+        };
+        const newLists = [...todoLists, newStateList];
+        setTodoLists(newLists);
+      })
       .catch((error) => console.log(error));
-    const newLists = [...todoLists, { listId: todoLists.length + 1, listName: text, todos: [] }];
-    setTodoLists(newLists);
   };
 
   const deleteList = (id) => {
@@ -61,6 +71,21 @@ function App() {
     const newLists = [...todoLists];
     const index = newLists.findIndex((list) => list.listId === id);
     if (index !== -1) newLists.splice(index, 1);
+    setTodoLists(newLists);
+  };
+
+  const deleteTodo = (listId, id) => {
+    axios
+      .delete(`http://localhost:8080/todo/${id}`)
+      .then((response) => console.log(response))
+      .catch((error) => console.log(error));
+    const newLists = [...todoLists];
+    newLists.forEach((list) => {
+      if (list.listId === listId) {
+        const todoIndex = list.todos.findIndex((todo) => todo.id === id);
+        if (todoIndex !== -1) list.todos.splice(todoIndex, 1);
+      }
+    });
     setTodoLists(newLists);
   };
 
@@ -76,7 +101,14 @@ function App() {
     <div className='App'>
       <div className='main-container'>
         {todoLists.map((list, index) => (
-          <ListCard key={index} index={index} data={list} addTodo={addTodo} deleteList={deleteList} />
+          <ListCard
+            key={index}
+            index={index}
+            data={list}
+            addTodo={addTodo}
+            deleteList={deleteList}
+            deleteTodo={deleteTodo}
+          />
         ))}
         <ListInput addList={addList} />
       </div>
